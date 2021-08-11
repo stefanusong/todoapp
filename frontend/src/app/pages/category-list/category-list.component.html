@@ -1,0 +1,192 @@
+<div class="body-container">
+  <!-- Modal Box To Create Category-->
+  <ng-template #create let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add Category</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="categoryName">Category Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="categoryName"
+            placeholder="Enter category name"
+            name="categoryName"
+            [(ngModel)]="this.newCategoryTitle"
+            required
+            minlength="3"
+          />
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="createCategory(); modal.close('done')"
+      >
+        Save
+      </button>
+    </div>
+  </ng-template>
+  <!-- Modal Box To Update Category -->
+  <ng-template #update let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Update Category</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="categoryName">Category Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="categoryName"
+            placeholder="Enter category name"
+            name="categoryName"
+            [(ngModel)]="this.newCategoryTitle"
+            required
+            minlength="3"
+          />
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="
+          updateCategory(updatedCategoryId, newCategoryTitle);
+          modal.close('done')
+        "
+      >
+        Save
+      </button>
+    </div>
+  </ng-template>
+  <!-- Modal Box To Confirm Deletion -->
+  <ng-template #delete let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">
+        Are you sure to delete this category ?
+      </h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="deleteCategory(deletedCategoryId); modal.close('done')"
+      >
+        Yes
+      </button>
+    </div>
+  </ng-template>
+
+  <!-- Category lists container -->
+  <div class="category-box bg-dark d-flex flex-column">
+    <!-- container header -->
+    <div
+      class="
+        mb-4
+        d-flex
+        flex-lg-row flex-column
+        justify-content-between
+        align-items-center
+      "
+    >
+      <div>
+        <h3 class="text-white header-title">CATEGORIES</h3>
+      </div>
+      <div>
+        <button
+          type="button"
+          class="btn btn-primary btn-add"
+          style="font-weight: bold"
+          (click)="openCreateModal(create)"
+        >
+          Add Category
+        </button>
+      </div>
+    </div>
+
+    <!-- Category tile -->
+    <div
+      *ngFor="let category of categories"
+      class="
+        category-tile
+        d-flex
+        flex-md-row flex-column
+        justify-content-between
+        align-items-center
+      "
+      (click)="navigateToTodoPage(category._id)"
+    >
+      <p class="text-white mb-lg-0 mb-2">{{ category.title }}</p>
+
+      <!-- action buttons -->
+      <div class="actions d-flex">
+        <div
+          class="edit-btn d-flex bg-dark"
+          (click)="$event.stopPropagation();openUpdateModal(update, category._id)"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 170 170"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M146.696 49.8667C149.458 47.1042 149.458 42.5 146.696 39.8792L130.121 23.3042C127.5 20.5417 122.896 20.5417 120.133 23.3042L107.1 36.2667L133.663 62.8292L146.696 49.8667ZM21.25 122.188V148.75H47.8125L126.154 70.3375L99.5917 43.775L21.25 122.188Z"
+              fill="white"
+            />
+          </svg>
+        </div>
+
+        <div
+          class="delete-btn d-flex bg-dark"
+          (click)="$event.stopPropagation();openDeleteModal(delete, category._id)"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 170 170"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M144.288 63.1123L137.204 75.3665L51.2833 25.7832L58.3667 13.529L79.9 25.9248L89.5333 23.304L120.204 41.0123L122.825 50.7165L144.288 63.1123ZM42.5 134.583V49.5832H78.4125L127.5 77.9165V134.583C127.5 138.34 126.007 141.944 123.351 144.601C120.694 147.257 117.091 148.75 113.333 148.75H56.6667C52.9094 148.75 49.3061 147.257 46.6493 144.601C43.9926 141.944 42.5 138.34 42.5 134.583Z"
+              fill="white"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
